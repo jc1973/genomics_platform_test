@@ -13,7 +13,7 @@ def lambda_handler(event, context):
 
     # Create the directories
     try:
-        os.makedirs('/tmp/upload')
+        os.makedirs('/tmp/source')
     except:
         pass
 
@@ -28,13 +28,13 @@ def lambda_handler(event, context):
     
     # creating download path and downloading the img object from S3
     object_key = str(uuid.uuid4()) + '-' + key
-    img_download_path = '/tmp/{}'.format(object_key)
+    img_download_path = '/tmp/source/{}'.format(object_key)
     
     with open(img_download_path,'wb') as img_file:
         s3_client.download_fileobj(source_bucket, key, img_file)
     
-    # thumbnail img path
-    img_thumbnail_path = '/tmp/thumbnail-{}'.format(object_key)
+    # processed img path
+    img_processed_path = '/tmp/processed/{}'.format(object_key)
 
     # Creating and saving img thumbnail from downloaded img
     source_img = Image.open(img_download_path)
