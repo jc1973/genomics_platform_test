@@ -2,5 +2,6 @@
 # Global Variables
 #--------------------------------------------------------------
 
-global_region                 = "eu-west-1"
+global_region = "eu-west-1"
+project_name  = "image-processor"
 

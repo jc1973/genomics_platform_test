@@ -3,4 +3,5 @@
 #--------------------------------------------------------------
 
 variable "global_region" {}
+variable "project_name" {}
 
