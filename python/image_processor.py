@@ -38,9 +38,11 @@ def lambda_handler(event, context):
 
     # Creating and saving img thumbnail from downloaded img
     source_img = Image.open(img_download_path)
-    source_img.thumbnail((img_width,img_height))
-    source_img.save(img_thumbnail_path)
+    data = list(source_img.getdata())
+    img_without_exif = Image.new(source_img.mode, source_img.size)
+    img_without_exif.putdata(data)
+    img_without_exif.save(img_processed_path)
     
-    # uploading img thumbnail to destination bucket
-    upload_key = 'thumbnail-{}'.format(object_key)
-    s3_client.upload_file(img_thumbnail_path, dest_bucket,upload_key)
+    # uploading img withoux exif to destination bucket
+    upload_key = '{}'.format(object_key)
+    s3_client.upload_file(img_processed_path, dest_bucket,upload_key)
