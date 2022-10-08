@@ -2,12 +2,15 @@ import os
 import json
 import uuid
 import boto3
+import imghdr
+
 from urllib.parse import unquote_plus
 
 import importlib
 exif_spec = importlib.util.find_spec("exif")
 found = exif_spec is not None
 print('exif found:' , found)
+
 
 from exif import Image
 
@@ -54,6 +57,12 @@ def lambda_handler(event, context):
     print('Checking to see if imaga downloaded to /tmp/source ' , os.listdir('/tmp/source'))
     print('Checking size of file' , os.stat(img_download_path))
 
+    # Check to see if image is a jpeg (don't rely on extension)
+    img_type = imghdr.what(img_download_path)
+    if img_type != 'jpeg':
+        print('Error: file ' + img_download_path + 'is not a jpeg')
+        raise NameError('File is not a jpeg: ' + key)
+    
     strip_exif_image(img_download_path, img_processed_path)
     
     print('saved image: ' , os.listdir('/tmp/processed'))
