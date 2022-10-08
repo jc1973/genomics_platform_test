@@ -3,9 +3,25 @@ resource "aws_iam_user" "UserA" {
   path          = "/"
 }
 
+resource "aws_iam_user_login_profile" "UserA" {
+  user    = aws_iam_user.UserA.name
+}
+
+output "UserA_password" {
+  value = aws_iam_user_login_profile.UserA.password
+}
+
 resource "aws_iam_user" "UserB" {
   name          = "UserB"
   path          = "/"
+}
+
+resource "aws_iam_user_login_profile" "UserB" {
+  user    = aws_iam_user.UserB.name
+}
+
+output "UserB_password" {
+  value = aws_iam_user_login_profile.UserB.password
 }
 
 
