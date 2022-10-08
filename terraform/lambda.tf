@@ -7,7 +7,7 @@ module "lambda_function" {
   runtime       = "python3.9"
 
 
-  source_path = "../exif_lamba_function"
+  source_path = "../lamba_source"
 
   tags = {
     Name = "${var.project_name}-lambda"
